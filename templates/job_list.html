@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-lg-9 sm-margin-50px-bottom">
+    {% for job_item in object_list %}
+        <a class="card text-dark border-color-light-black margin-30px-bottom" href="{{job_item.url}}" target="_blank">
+            <div class="card-body padding-20px-tb padding-30px-lr">
+                <div class="row justify-content-sm-between align-items-sm-center">
+                    <div class="col-md-6 xs-margin-10px-bottom">
+                        <div class="d-block d-sm-flex align-items-center">
+                            <div class="job-icon bg-light mobile-no-margin-right mobile-margin-20px-bottom margin-30px-right">
+                                <img src="{{ job_item.company_logo }}" alt=""/>
+                            </div>
+                            <div>
+                                <span class="text-secondary">{{ job_item.company }}</span>
+                                <br> {{ job_item.title }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-secondary xs-margin-10px-bottom">
+                        <span class="ti-location-pin margin-10px-right"></span>{{ job_item.location }}
+                        <br> {{ job_item.type }}
+                    </div>
+                    <div class="col-md-3 col-xl-2 text-primary text-left text-md-right">
+                        Apply now →
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
+    <!-- Pagination start -->
+    {% if is_paginated %}
+        <div class="pagination text-small text-uppercase text-extra-dark-gray">
+            <ul>
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-long-arrow-alt-left margin-5px-right xs-display-none"></i> Prev</a></li>
+                {% endif %}
+                <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">Next <i class="fas fa-long-arrow-alt-right margin-5px-left xs-display-none"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+    <!-- Pagination end -->
+
+</div>
+
+{% endblock content %}
