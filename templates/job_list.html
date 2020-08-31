@@ -3,13 +3,13 @@
 {% block content %}
 
 <div class="col-lg-9 sm-margin-50px-bottom">
-    {% for job_item in object_list %}
+    {% for job_item in page_obj %}
         <a class="card text-dark border-color-light-black margin-30px-bottom" href="{{job_item.url}}" target="_blank">
             <div class="card-body padding-20px-tb padding-30px-lr">
                 <div class="row justify-content-sm-between align-items-sm-center">
                     <div class="col-md-6 xs-margin-10px-bottom">
                         <div class="d-block d-sm-flex align-items-center">
-                            <div class="job-icon bg-light mobile-no-margin-right mobile-margin-20px-bottom margin-30px-right">
+                            <div class="job-icon mobile-no-margin-right mobile-margin-20px-bottom margin-30px-right">
                                 <img src="{{ job_item.company_logo }}" alt=""/>
                             </div>
                             <div>
@@ -45,7 +45,63 @@
         </div>
     {% endif %}
     <!-- Pagination end -->
-
 </div>
 
+<!-- filter content -->
+    <div class="col-lg-3">
+        <div id="accordion" class="accordion-style1">
+
+                <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Search Keywords
+                    </button>
+                        </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <form method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control padding-10px-tb" name="location" id="exampleFormControlInput5" placeholder="Location">
+                            </div>
+                            <div class="form-group mb-0">
+                                <input type="text" class="form-control padding-10px-tb" name="title" id="exampleFormControlSelect6" placeholder="Job title">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:20px">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+                <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Job Type
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <form method="get">
+                            {% for type in types %}
+                            <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="job_type" id="exampleRadios1" value="{{ type }}">
+                                  <label class="form-check-label" for="exampleRadios1">
+                                    {{ type }}
+                                  </label>
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-info btn-lg btn-block" style="margin-top:20px">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- filter content end -->
 {% endblock content %}
