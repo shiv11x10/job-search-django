@@ -30,20 +30,25 @@
         </a>
     {% endfor %}
 
-    <!-- Pagination start -->
-    {% if is_paginated %}
-        <div class="pagination text-small text-uppercase text-extra-dark-gray">
-            <ul>
-                {% if page_obj.has_previous %}
-                    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-long-arrow-alt-left margin-5px-right xs-display-none"></i> Prev</a></li>
-                {% endif %}
-                <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
-                {% if page_obj.has_next %}
-                    <li><a href="?page={{ page_obj.next_page_number }}">Next <i class="fas fa-long-arrow-alt-right margin-5px-left xs-display-none"></i></a></li>
-                {% endif %}
-            </ul>
-        </div>
+    {% if display_all %}
+        <form method="get">
+        <button type="submit" name="all" class="btn btn-success btn-lg float-right" value="all">Load all >></button>
+        </form>
     {% endif %}
+    <!-- Pagination start -->
+<!--    {% if is_paginated %}-->
+<!--        <div class="pagination text-small text-uppercase text-extra-dark-gray">-->
+<!--            <ul>-->
+<!--                {% if page_obj.has_previous %}-->
+<!--                    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-long-arrow-alt-left margin-5px-right xs-display-none"></i> Prev</a></li>-->
+<!--                {% endif %}-->
+<!--                <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>-->
+<!--                {% if page_obj.has_next %}-->
+<!--                    <li><a href="?page={{ page_obj.next_page_number }}">Next <i class="fas fa-long-arrow-alt-right margin-5px-left xs-display-none"></i></a></li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    {% endif %}-->
     <!-- Pagination end -->
 </div>
 

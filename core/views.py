@@ -23,7 +23,7 @@ def is_valid_queryparam(param):
 
 def home(request):
     job = Job.objects.all()
-
+    display_all = True
     types = []
     for job_item in job:
         if job_item.type not in types:
@@ -35,18 +35,28 @@ def home(request):
 
     if is_valid_queryparam(location):
         job = job.filter(location__icontains=location)
+        display_all = False
 
     if is_valid_queryparam(title):
         job = job.filter(title__icontains=title)
+        display_all = False
 
     if is_valid_queryparam(job_type):
         job = job.filter(type=job_type)
+        display_all = False
 
+
+    if is_valid_queryparam(request.GET.get('all')):
+        display_all = False
+    else:
+        job = job[0:10]
+
+    print(len(job))
     # paginator = Paginator(job, 5)  # Show 5 contacts per page.
     #
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
-    return render(request, 'job_list.html', {'page_obj': job, 'types': types})
+    return render(request, 'job_list.html', {'page_obj': job, 'types': types, 'display_all': display_all})
 
 
 def load(request):
@@ -56,7 +66,7 @@ def load(request):
     js = json.loads(data)
     # print(js[0].keys())
     for job_item in js:
-        job = Job(
+        job, created = Job.objects.get_or_create(
             type=job_item['type'],
             url=job_item['url'],
             created_at=job_item['created_at'],
@@ -68,5 +78,4 @@ def load(request):
             how_to_apply=job_item['how_to_apply'],
             company_logo=job_item['company_logo']
         )
-        job.save()
     return HttpResponse("success!")
